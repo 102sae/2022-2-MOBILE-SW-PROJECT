@@ -22,5 +22,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        Button menuPlusBtn = (Button)findViewById(R.id.menuAddBtn);
+        menuPlusBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(),AddfoodActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

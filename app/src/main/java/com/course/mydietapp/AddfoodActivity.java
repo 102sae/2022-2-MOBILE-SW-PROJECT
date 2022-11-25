@@ -5,7 +5,9 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TimePicker;
 
-public class AddfoodActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class AddfoodActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     EditText add;
     EditText count;
@@ -25,5 +27,4 @@ public class AddfoodActivity {
 
 
     }
-
 }
