@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MyDietApp</string>
+    <string name="mainString">오늘의 식사를 입력하세요</string>
+    <string name="menuPlusBtn">메뉴 추가</string>
+    <string name="gotoCalendarBtn">캘린더 보기</string>
+    <string name="gotoMealBtn">식사 분석하기</string>
+
+    <string-array name="custom_months">
+        <item>1월</item>
+        <item>2월</item>
+        <item>3월</item>
+        <item>4월</item>
+        <item>5월</item>
+        <item>6월</item>
+        <item>7월</item>
+        <item>8월</item>
+        <item>9월</item>
+        <item>10월</item>
+        <item>11월</item>
+        <item>12월</item>
+    </string-array>
+</resources>
