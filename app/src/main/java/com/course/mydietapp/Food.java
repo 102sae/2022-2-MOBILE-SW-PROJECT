@@ -4,12 +4,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-
 @Entity(tableName = "food")
 public class Food {
     @PrimaryKey(autoGenerate = true)
     private int post_id  = 0; // 하나의 식단에 대한 고유 ID
+
+    @ColumnInfo(name = "date")
+    private String date;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -19,6 +20,9 @@ public class Food {
 
     @ColumnInfo(name="amount")
     private String amount;
+
+    @ColumnInfo(name="review")
+    private float review;
 
     @ColumnInfo(name="time")
     private String time;
@@ -32,6 +36,14 @@ public class Food {
 
     public void setPost_id(int post_id) {
         this.post_id = post_id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getName() {
@@ -64,6 +76,14 @@ public class Food {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public float getReview() {
+        return review;
+    }
+
+    public void setReview(float review) {
+        this.review = review;
     }
 
     public String getPlace() {

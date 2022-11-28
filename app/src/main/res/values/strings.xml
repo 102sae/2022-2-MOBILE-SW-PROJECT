@@ -5,6 +5,7 @@
     <string name="gotoCalendarBtn">캘린더 보기</string>
     <string name="gotoMealBtn">식사 분석하기</string>
 
+
     <string-array name="custom_months">
         <item>1월</item>
         <item>2월</item>
@@ -19,4 +20,11 @@
         <item>11월</item>
         <item>12월</item>
     </string-array>
+    <string name="addSaveBtn">저장</string>
+    <string name="loadImage">이미지 불러오기</string>
+    <string name="menuName">메뉴 이름</string>
+    <string name="menuAmount">먹은 양</string>
+    <string name="menuReview">식단 점수</string>
+    <string name="eatTime">식사 시간</string>
+    <string name="eatPlace">식사 장소</string>
 </resources>

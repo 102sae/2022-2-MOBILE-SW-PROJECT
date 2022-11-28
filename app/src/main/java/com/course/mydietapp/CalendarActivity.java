@@ -27,13 +27,20 @@ import java.util.List;
 public class CalendarActivity extends AppCompatActivity {
     private MaterialCalendarView calendarView;
     public TextView todayTextView;
-    public EditText contextEditText;
+    public TextView foodTodayTextView;
     public FoodDao cFoodDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        FoodDatabase database = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "MyDietApp")
+                .fallbackToDestructiveMigration() //스키마(Database) 변경 가능
+                .allowMainThreadQueries()         //main Thread에서 DD에 입출력 가능
+                .build();
+        cFoodDao = database.foodDao(); //인터페이스 객체 할당
+        List<Food> foodList = cFoodDao.getFoodAll(); //Food 가져오기
 
         calendarView = findViewById(R.id.calendarview);
         // 월 한글로 변경
@@ -48,7 +55,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         //클릭한 날짜 TextView
         todayTextView = findViewById(R.id.todayTextView);
-        contextEditText = findViewById(R.id.contextEditText);
+        foodTodayTextView = findViewById(R.id.todayFoodTextView);
         calendarView.setOnDateChangedListener((widget, date, selected) -> {
             int year = date.getYear();
             int month = date.getMonth() + 1;
@@ -57,30 +64,20 @@ public class CalendarActivity extends AppCompatActivity {
             String shot_Day = year + "/" + month + "/" + day;
             Log.i("shot_Day test", shot_Day + "");
             todayTextView.setText(shot_Day);
+            foodTodayTextView.setVisibility(View.VISIBLE);
+            for (int i = 0; i < foodList.size(); i++) {
+                Log.i("test", foodList.get(i).getName() + "\n" + foodList.get(i).getAmount());
+            }
+
         });
 
-        FoodDatabase database = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "MyDietApp")
-                .fallbackToDestructiveMigration() //스키마(Database) 변경 가능
-                .allowMainThreadQueries()         //main Thread에서 DD에 입출력 가능
-                .build();
 
-        cFoodDao = database.foodDao(); //인터페이스 객체 할당
 
-        //데이터 삽입
-        Food food = new Food();
-        food.setName("피자");
-        food.setAmount("1인분");
-        food.setTime("점심");
-        food.setImage(" ");
-        food.setPlace("잠실");
-        cFoodDao.setInsertFood(food);
 
-        //데이터 조회
-        List<Food> foodList = cFoodDao.getFoodAll();
 
-        for (int i = 0; i < foodList.size(); i++) {
-            Log.i("test", foodList.get(i).getName() + "\n" + foodList.get(i).getAmount());
-        }
+
+
+
 
     }
 
