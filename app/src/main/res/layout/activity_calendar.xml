@@ -10,13 +10,12 @@
         android:id="@+id/calendarview"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        tools:layout_editor_absoluteX="-33dp"
-        tools:layout_editor_absoluteY="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:mcv_selectionColor="@color/pink"
-        />
+        tools:layout_editor_absoluteX="-33dp"
+
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/todayTextView"
@@ -24,20 +23,47 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@id/todayFoodLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendarview" />
+
+    <LinearLayout
+        android:id="@+id/todayFoodLayout"
+        android:layout_width="413dp"
+        android:layout_height="118dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarview"
-        app:layout_constraintVertical_bias="0.207" />
+        app:layout_constraintTop_toBottomOf="@id/todayTextView">
 
-    <TextView
-        android:id="@+id/todayFoodTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/todayTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+
+            android:id="@+id/selectDayFoodTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="80dp"/>
+
+        <TextView
+            android:id="@+id/selectDayFoodNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="80dp"/>
+
+        <TextView
+            android:id="@+id/selectDayFoodAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="80dp"/>
+
+
+    </LinearLayout> <!--수직 레이아웃-->
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,9 @@ package com.course.mydietapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +68,7 @@ public class AddfoodActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*"); // 갤러리 열기
                 intent.setAction((Intent.ACTION_GET_CONTENT));
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent,REQUEST_CODE);
 
             }
         });
@@ -83,17 +85,14 @@ public class AddfoodActivity extends AppCompatActivity {
                 food.setName(addFood.getText().toString());
                 food.setDate(getCurrentDate());
                 food.setImage(imageUri);
-                food.setAmount(count.getText().toString());
-                String stringTime = time.getCurrentHour()+ time.getCurrentMinute().toString();
+                food.setAmount(count.getText().toString()+"인분");
+                String stringTime = time.getCurrentHour()+ ":"+time.getCurrentMinute().toString();
                 food.setTime(stringTime);
                 food.setReview(ratingBar.getRating());
                 food.setPlace(place.getText().toString());
                 cFoodDao.setInsertFood(food);
 
-
                 startActivity(intent);
-
-
             }
 
         });
@@ -112,13 +111,14 @@ public class AddfoodActivity extends AppCompatActivity {
                     imageUri = uri.toString();
                     //다이얼로그 이미지 사진에 넣기
                 } catch (Exception e) {
-                    Log.d("fail_msg","Error");
+                    Log.d("fail_msg","error");
                 }
             } else if (resultCode == RESULT_CANCELED) {
 
             }
         }
     }
+
 
 
 
