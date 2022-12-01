@@ -1,10 +1,13 @@
 package com.course.mydietapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 
@@ -34,7 +38,7 @@ public class AddfoodActivity extends AppCompatActivity {
     public FoodDao cFoodDao; // food db
     public String imageUri;
 
-    private static final int REQUEST_CODE = 0; // 사진 요청 코드
+    private static final int REQUEST_CODE = 1; // 사진 요청 코드
 
     public static String getCurrentDate() { //현재 날짜 가져옴
         Date nowDate = new Date();
@@ -65,9 +69,9 @@ public class AddfoodActivity extends AppCompatActivity {
         ImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*"); // 갤러리 열기
-                intent.setAction((Intent.ACTION_GET_CONTENT));
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE); // 갤러리 열기
+
                 startActivityForResult(intent,REQUEST_CODE);
 
             }
@@ -84,6 +88,7 @@ public class AddfoodActivity extends AppCompatActivity {
                 Food food = new Food();
                 food.setName(addFood.getText().toString());
                 food.setDate(getCurrentDate());
+                //food.setImage("file:///내장 메모리/DCIM/Camera/"+imageUri);
                 food.setImage(imageUri);
                 food.setAmount(count.getText().toString()+"인분");
                 String stringTime = time.getCurrentHour()+ ":"+time.getCurrentMinute().toString();
@@ -107,9 +112,21 @@ public class AddfoodActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     Uri uri = data.getData();
-                    Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
-                    imageUri = uri.toString();
+                    Context context = getApplicationContext();
+                    String path = RealPathUtil.getFilePath(context,uri);
+
+                    if(path==null){
+                        Log.i("text","null");
+                    }
+                    else{
+                        Log.i("text", path);
+                        Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
+                        imageUri = path;
+                    }
+
+
                     //다이얼로그 이미지 사진에 넣기
+
                 } catch (Exception e) {
                     Log.d("fail_msg","error");
                 }
@@ -118,9 +135,4 @@ public class AddfoodActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
 }

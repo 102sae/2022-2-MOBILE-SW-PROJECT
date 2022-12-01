@@ -24,7 +24,7 @@ public interface FoodDao {
     List<Food> getFoodAll();
 
     @Query("SELECT * FROM food WHERE date = :selectDate ")
-    Food[] loadAllFoodOnDate(String selectDate);
+    List<Food> loadAllFoodOnDate(String selectDate);
 
 
 
