@@ -31,5 +31,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button gotoMealBtn = (Button)findViewById(R.id.mealAnalysis);
+        gotoMealBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(),FoodanalysisActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

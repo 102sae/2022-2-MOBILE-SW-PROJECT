@@ -30,6 +30,9 @@
         <activity
             android:name=".AddfoodActivity"
             android:exported="false" />
+        <activity
+            android:name=".FoodanalysisActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
