@@ -123,9 +123,8 @@ public class CalendarActivity extends AppCompatActivity {
                     selectDayFoodTime.setText(selectedFoodList.get(i).getTime());
 
                     try{
-                        InputStream in = getContentResolver().openInputStream( Uri.parse(selectedFoodList.get(i).getImage()));
-                        Bitmap bitmap = BitmapFactory.decodeStream(in);
-                        selectDayFoodImage.setImageBitmap(bitmap);
+                        Uri uri = Uri.parse(selectedFoodList.get(i).getImage());
+                        Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((selectDayFoodImage));
                     } catch (Exception e){
                         e.printStackTrace();
                     }

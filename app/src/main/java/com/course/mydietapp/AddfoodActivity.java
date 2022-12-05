@@ -66,6 +66,16 @@ public class AddfoodActivity extends AppCompatActivity {
         Button ImgBtn = findViewById(R.id.ImageBtn);
         Button SvgBtn = findViewById(R.id.postSaveBtn);
 
+        Button MapBtn = (Button)findViewById(R.id.loactionBtn);
+
+        MapBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         ImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,9 +133,6 @@ public class AddfoodActivity extends AppCompatActivity {
                         Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
                         imageUri = path;
                     }
-
-
-                    //다이얼로그 이미지 사진에 넣기
 
                 } catch (Exception e) {
                     Log.d("fail_msg","error");
