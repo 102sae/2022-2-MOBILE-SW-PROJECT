@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
@@ -86,6 +87,13 @@ public class AddfoodActivity extends AppCompatActivity {
 
             }
         });
+
+        //place google map
+        Intent intent = getIntent(); //전달할 데이터를 받을 Intent
+        //text 키값으로 데이터를 받는다. String을 받아야 하므로 getStringExtra()를 사용함
+        String placeName = intent.getStringExtra("placeName");
+
+        place.setText(placeName);
 
 
         SvgBtn.setOnClickListener(new View.OnClickListener() {

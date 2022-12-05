@@ -28,4 +28,6 @@
     <string name="eatTime">식사 시간</string>
     <string name="eatPlace">식사 장소</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="google_map_api">AIzaSyDyB2Zhqcb-uNgsgRzOe5PXqsreIPffq_0</string>
+    <string name="place_btn">장소 저장</string>
 </resources>

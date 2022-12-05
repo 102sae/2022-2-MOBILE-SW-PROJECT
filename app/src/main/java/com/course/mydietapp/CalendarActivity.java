@@ -37,7 +37,7 @@ public class CalendarActivity extends AppCompatActivity {
     public TextView selectDayFoodTime;
     public ImageView selectDayFoodImage;
     public FoodDao cFoodDao;
-
+    String[] icons = { "angel", "crying", "happy", "kissing" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
