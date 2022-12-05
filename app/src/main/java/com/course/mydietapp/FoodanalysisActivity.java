@@ -1,6 +1,8 @@
 package com.course.mydietapp;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +14,18 @@ import java.util.List;
 public class FoodanalysisActivity extends AppCompatActivity {
     private AnalysisDao mAnalysisDao;
     public FoodDao cFoodDao;
-    public TextView kcal;
     public TextView kcaldate;
     public TextView kcalname;
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodanalysis);
 
-        kcal = findViewById(R.id.textViewkcal);
         kcaldate=findViewById(R.id.textViewdate);
         kcalname=findViewById(R.id.textViewname);
+        list=findViewById(R.id.list);
 
         FoodDatabase database = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "MyDietApp")
                 .fallbackToDestructiveMigration() //스키마(Database) 변경 가능
@@ -124,19 +126,26 @@ public class FoodanalysisActivity extends AppCompatActivity {
 
         List<Analysis> analysisList=mAnalysisDao.getAnalysisAll();
         List<Food> foodList=cFoodDao.getFoodAll();
+        List<String> data=new ArrayList<>();
+        int total=0;
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, data);
+        list.setAdapter(adapter);
 
         for(int i=0; i<analysisList.size(); i++) {
             for (int j = 0; j < foodList.size(); j++) {
                 if ((analysisList.get(i).getKname()).equals(foodList.get(j).getName())){
                     kcaldate.setText(foodList.get(j).getDate());
-                    kcalname.setText(analysisList.get(i).getKname());
-                    kcal.setText("칼로리 : "+analysisList.get(i).getKcal()+"kcal");
+                    data.add(analysisList.get(i).getKname()+"   "+ analysisList.get(i).getKcal()+"kcal");
+                    adapter.notifyDataSetChanged();
+                    total+=Integer.parseInt(analysisList.get(i).getKcal());
                 }
 
             }
 
         }
 
+        kcalname.setText("하루 총 칼로리량 : "+Integer.toString(total)+"kcal");
 
     }
 }
