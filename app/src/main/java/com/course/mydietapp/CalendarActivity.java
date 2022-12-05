@@ -1,21 +1,18 @@
 package com.course.mydietapp;
 
 
-import static com.course.mydietapp.RealPathUtil.getRealPath;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 
 import android.os.Bundle;
 
 
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +22,6 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
 
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 import java.util.Collections;
@@ -132,6 +127,14 @@ public class CalendarActivity extends AppCompatActivity {
                 }
             }
         });//캘린더 날짜 클릭 이벤트
+
+        selectDayFoodText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ShowdetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
     } //onClick
 

@@ -51,6 +51,9 @@
         <activity
             android:name=".FoodanalysisActivity"
             android:exported="false" />
+        <activity
+            android:name=".ShowdetailActivity"
+            android:exported="false" />
 
     </application>
 
