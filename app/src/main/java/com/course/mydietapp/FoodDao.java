@@ -26,6 +26,9 @@ public interface FoodDao {
     @Query("SELECT * FROM food WHERE date = :selectDate ")
     List<Food> loadAllFoodOnDate(String selectDate);
 
+    @Query("SELECT * FROM food WHERE post_id = :postID ")
+    Food loadAllFoodOnID(String postID);
+
 
 
 }
