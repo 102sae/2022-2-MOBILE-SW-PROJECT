@@ -37,7 +37,7 @@ public class AddfoodActivity extends AppCompatActivity {
     EditText place;
     ImageView image;
     public FoodDao cFoodDao; // food db
-    public String imageUri;
+    private Uri imageUri;
 
     private static final int REQUEST_CODE = 1; // 사진 요청 코드
 
@@ -106,8 +106,7 @@ public class AddfoodActivity extends AppCompatActivity {
                 Food food = new Food();
                 food.setName(addFood.getText().toString());
                 food.setDate(getCurrentDate());
-                //food.setImage("file:///내장 메모리/DCIM/Camera/"+imageUri);
-                food.setImage(imageUri);
+                food.setImage(imageUri.toString());
                 food.setAmount(count.getText().toString()+"인분");
                 String stringTime = time.getCurrentHour()+ ":"+time.getCurrentMinute().toString();
                 food.setTime(stringTime);
@@ -130,17 +129,9 @@ public class AddfoodActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     Uri uri = data.getData();
-                    Context context = getApplicationContext();
-                    String path = RealPathUtil.getFilePath(context,uri);
 
-                    if(path==null){
-                        Log.i("text","null");
-                    }
-                    else{
-                        Log.i("text", path);
-                        Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
-                        imageUri = path;
-                    }
+                    Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
+                    imageUri = uri;
 
                 } catch (Exception e) {
                     Log.d("fail_msg","error");
