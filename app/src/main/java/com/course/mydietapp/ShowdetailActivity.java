@@ -3,32 +3,32 @@ package com.course.mydietapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowdetailActivity extends AppCompatActivity {
     public FoodDao cFoodDao;
     private AnalysisDao mAnalysisDao;
     public TextView detaildate;
-    public TextView detailtime;
-    public TextView detailname;
-    public TextView detailrat;
-    public TextView detailplace;
-    public ImageView imageView;
-    public Button button;
-    public TextView detailkcal;
+    public ListView list;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showdetail);
+
+        Intent intent=getIntent();
+        String day=intent.getStringExtra("shotday");
 
         FoodDatabase database = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "MyDietApp")
                 .fallbackToDestructiveMigration() //스키마(Database) 변경 가능
@@ -45,33 +45,19 @@ public class ShowdetailActivity extends AppCompatActivity {
         List<Analysis> analysisList=mAnalysisDao.getAnalysisAll();
 
         detaildate=findViewById(R.id.textViewdetaildate);
-        detailtime=findViewById(R.id.textViewdetailtime);
-        detailname=findViewById(R.id.textViewdetailname);
-        detailrat=findViewById(R.id.textViewdetailrat);
-        detailplace=findViewById(R.id.textViewdetailplace);
-        imageView=findViewById(R.id.imageView2);
-        button=findViewById(R.id.button);
-        detailkcal=findViewById(R.id.textViewdetailkcal);
+        list=findViewById(R.id.list);
+
+        List<String> data=new ArrayList<>();
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+        list.setAdapter(adapter);
 
         for (int i = 0; i < foodList.size(); i++) {
+            if (day.equals(foodList.get(i).getDate()))
             detaildate.setText(foodList.get(i).getDate());
-            //imageView.setImageURI();
-            detailtime.setText("식사 시간 "+foodList.get(i).getTime());
-            detailname.setText("식사 "+foodList.get(i).getName()+" "+foodList.get(i).getAmount());
-            detailrat.setText("식사평 "+String.valueOf(foodList.get(i).getReview()));
-            detailplace.setText("식사 위치 "+foodList.get(i).getPlace());
-            for (int j = 0; j < analysisList.size(); j++) {
-                if ((analysisList.get(j).getKname()).equals(foodList.get(i).getName()))
-                    detailkcal.setText("칼로리 "+analysisList.get(j).getKcal()+"kcal");
-            }
+
+            data.add(foodList.get(i).getTime()+"\n"+foodList.get(i).getName()+"   "+foodList.get(i).getAmount()+"\n"+foodList.get(i).getReview()+"\n"+foodList.get(i).getPlace());
+            adapter.notifyDataSetChanged();
         }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FoodanalysisActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 

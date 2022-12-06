@@ -12,8 +12,11 @@ import android.os.Bundle;
 
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +27,7 @@ import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormat
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +41,7 @@ public class CalendarActivity extends AppCompatActivity {
     public TextView selectDayFoodTime;
     public ImageView selectDayFoodImage;
     public FoodDao cFoodDao;
+    public ListView list;
     String[] icons = { "angel", "crying", "happy", "kissing" };
 
     @Override
@@ -69,6 +74,7 @@ public class CalendarActivity extends AppCompatActivity {
         selectDayFoodAmount = findViewById(R.id.selectDayFoodAmountText);
         selectDayFoodTime = findViewById(R.id.selectDayFoodTimeText);
         selectDayFoodImage = findViewById(R.id.selectDayFoodImage);
+        list=findViewById(R.id.list);
 
         //데이터 있는 데에 마다 점 찍기
         for (int i = 0; i < foodList.size(); i++) {
@@ -98,6 +104,10 @@ public class CalendarActivity extends AppCompatActivity {
             }
             todayTextView.setText(shot_Day);
 
+            List<String> data=new ArrayList<>();
+            ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+            list.setAdapter(adapter);
+
             selectDayFoodText.setVisibility(View.VISIBLE); //food data 보이도록
             selectDayFoodAmount.setVisibility(View.VISIBLE);
             selectDayFoodTime.setVisibility(View.VISIBLE);
@@ -112,10 +122,8 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 //선택된 날짜에 저장된 food data 작게 불러오기
                 for (int i = 0; i < cFoodDao.loadAllFoodOnDate(shot_Day).size(); i++) {
-                    // food data base 가져오기
-                    selectDayFoodText.setText(selectedFoodList.get(i).getName());
-                    selectDayFoodAmount.setText(selectedFoodList.get(i).getAmount());
-                    selectDayFoodTime.setText(selectedFoodList.get(i).getTime());
+                    data.add(selectedFoodList.get(i).getName()+"   "+selectedFoodList.get(i).getAmount()+"   "+selectedFoodList.get(i).getTime());
+                    adapter.notifyDataSetChanged();
 
                     try{
                         Uri uri = Uri.parse(selectedFoodList.get(i).getImage());
@@ -128,10 +136,11 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });//캘린더 날짜 클릭 이벤트
 
-        selectDayFoodText.setOnClickListener(new View.OnClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ShowdetailActivity.class);
+                intent.putExtra("shotday",todayTextView.getText());
                 startActivity(intent);
             }
         });
