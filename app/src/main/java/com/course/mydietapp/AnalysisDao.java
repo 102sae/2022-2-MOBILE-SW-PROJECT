@@ -21,4 +21,7 @@ public interface AnalysisDao {
 
     @Query("SELECT * FROM Analysis")
     List<Analysis> getAnalysisAll();
+
+    @Query("SELECT * FROM Analysis WHERE kname = :name")
+    Analysis loadAllAnalysisname(String name);
 }

@@ -41,6 +41,7 @@ public class CalendarActivity extends AppCompatActivity {
     public ListView list;
     private String listFoodID;
     private List<Food> selectedFoodList;
+    private String listFoodname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +127,10 @@ public class CalendarActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ShowdetailActivity.class);
                 listFoodID = Integer.toString(selectedFoodList.get(position).getPost_id());
+                listFoodname = selectedFoodList.get(position).getName();
                 Log.d("TAG", "onItemClick: "+listFoodID);
                 intent.putExtra("postID",listFoodID);
+                intent.putExtra("name", listFoodname);
                 startActivity(intent);
             }
         });

@@ -26,12 +26,14 @@ public class ShowdetailActivity extends AppCompatActivity {
     private AnalysisDao mAnalysisDao;
     private ImageView foodImage;
     private String postID;
+    private String name;
     private TextView title;
     private TextView fTime;
     private TextView fName;
     private TextView fAmount;
     private TextView fReview;
     private TextView fPlace;
+    private TextView fkcal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,15 @@ public class ShowdetailActivity extends AppCompatActivity {
         fAmount = (TextView) findViewById(R.id.fAmount);
         fReview = (TextView) findViewById(R.id.fReview);
         fPlace = (TextView) findViewById(R.id.fPlace);
+        fkcal = (TextView) findViewById(R.id.fkcal);
 
         foodImage = (ImageView)findViewById(R.id.foodImage);
         title = (TextView)findViewById(R.id.title);
 
         Intent intent=getIntent();
         postID =intent.getStringExtra("postID");
+        name =intent.getStringExtra("name");
+
 
         FoodDatabase database = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "MyDietApp")
                 .fallbackToDestructiveMigration() //스키마(Database) 변경 가능
@@ -61,6 +66,7 @@ public class ShowdetailActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build(); // 식사 분석 데이터 가져옴.
         mAnalysisDao=database2.analysisDao();
+        Analysis selectednameanalysisList = mAnalysisDao.loadAllAnalysisname(name);
 
         title.setText(selectedIDfoodList.getDate());
         Uri uri = Uri.parse(selectedIDfoodList.getImage());
@@ -70,6 +76,7 @@ public class ShowdetailActivity extends AppCompatActivity {
         fAmount.setText("먹은 양: " + selectedIDfoodList.getAmount());
         fPlace.setText("먹은 장소: " + selectedIDfoodList.getPlace());
         fReview.setText("맛: "+ selectedIDfoodList.getReview()+"점");
+        fkcal.setText("칼로리: "+selectednameanalysisList.getKcal()+"kcal");
 
 
     }
