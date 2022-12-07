@@ -16,22 +16,36 @@ import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShowdetailActivity extends AppCompatActivity {
     public FoodDao cFoodDao;
     private AnalysisDao mAnalysisDao;
-    public ListView list;
     private ImageView foodImage;
     private String postID;
+    private TextView title;
+    private TextView fTime;
+    private TextView fName;
+    private TextView fAmount;
+    private TextView fReview;
+    private TextView fPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showdetail);
+        fTime = (TextView) findViewById(R.id.fTime);
+        fName = (TextView) findViewById(R.id.fName);
+        fAmount = (TextView) findViewById(R.id.fAmount);
+        fReview = (TextView) findViewById(R.id.fReview);
+        fPlace = (TextView) findViewById(R.id.fPlace);
 
         foodImage = (ImageView)findViewById(R.id.foodImage);
+        title = (TextView)findViewById(R.id.title);
+
         Intent intent=getIntent();
         postID =intent.getStringExtra("postID");
 
@@ -48,19 +62,15 @@ public class ShowdetailActivity extends AppCompatActivity {
                 .build(); // 식사 분석 데이터 가져옴.
         mAnalysisDao=database2.analysisDao();
 
-        List<Analysis> analysisList=mAnalysisDao.getAnalysisAll();
-
-
-        list=findViewById(R.id.list);
-
-        List<String> data=new ArrayList<>();
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-        list.setAdapter(adapter);
-
+        title.setText(selectedIDfoodList.getDate());
         Uri uri = Uri.parse(selectedIDfoodList.getImage());
         Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((foodImage));
-        data.add(selectedIDfoodList.getTime()+"\n"+selectedIDfoodList.getName()+"   "+selectedIDfoodList.getAmount()+"\n"+selectedIDfoodList.getReview()+"\n"+selectedIDfoodList.getPlace());
-        adapter.notifyDataSetChanged();
+        fTime.setText("먹은 시간: "+ selectedIDfoodList.getTime());
+        fName.setText("음식 명: "+ selectedIDfoodList.getName());
+        fAmount.setText("먹은 양: " + selectedIDfoodList.getAmount());
+        fPlace.setText("먹은 장소: " + selectedIDfoodList.getPlace());
+        fReview.setText("맛: "+ selectedIDfoodList.getReview()+"점");
+
 
     }
 

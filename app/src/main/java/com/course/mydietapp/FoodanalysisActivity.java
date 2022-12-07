@@ -142,7 +142,6 @@ public class FoodanalysisActivity extends AppCompatActivity {
                 }
 
             }
-
         }
 
         kcalname.setText("하루 총 칼로리량 : "+Integer.toString(total)+"kcal");

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,7 +131,7 @@ public class AddfoodActivity extends AppCompatActivity {
                 try {
                     Uri uri = data.getData();
 
-                    Glide.with((getApplicationContext())).load(uri).centerCrop().placeholder(R.mipmap.ic_launcher).into((image));
+                    Glide.with((getApplicationContext())).load(uri).override(Target.SIZE_ORIGINAL).placeholder(R.mipmap.ic_launcher).into((image));
                     imageUri = uri;
 
                 } catch (Exception e) {
