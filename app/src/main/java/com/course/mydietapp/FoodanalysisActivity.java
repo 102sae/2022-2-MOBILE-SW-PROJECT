@@ -8,8 +8,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class FoodanalysisActivity extends AppCompatActivity {
     private AnalysisDao mAnalysisDao;
@@ -22,6 +25,10 @@ public class FoodanalysisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodanalysis);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date=new Date();
+        String day=formatter.format(date);
 
         kcaldate=findViewById(R.id.textViewdate);
         kcalname=findViewById(R.id.textViewname);
@@ -135,10 +142,12 @@ public class FoodanalysisActivity extends AppCompatActivity {
         for(int i=0; i<analysisList.size(); i++) {
             for (int j = 0; j < foodList.size(); j++) {
                 if ((analysisList.get(i).getKname()).equals(foodList.get(j).getName())){
-                    kcaldate.setText(foodList.get(j).getDate());
-                    data.add(analysisList.get(i).getKname()+"   "+ analysisList.get(i).getKcal()+"kcal");
-                    adapter.notifyDataSetChanged();
-                    total+=Integer.parseInt(analysisList.get(i).getKcal());
+                    if (day.equals(foodList.get(j).getDate())) {
+                        kcaldate.setText(foodList.get(j).getDate());
+                        data.add(analysisList.get(i).getKname() + "   " + analysisList.get(i).getKcal() + "kcal");
+                        adapter.notifyDataSetChanged();
+                        total += Integer.parseInt(analysisList.get(i).getKcal());
+                    }
                 }
 
             }
